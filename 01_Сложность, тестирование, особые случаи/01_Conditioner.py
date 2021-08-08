@@ -17,4 +17,22 @@
 Вторая строка содержит одно слово, записанное строчными буквами латинского алфавита — режим работы кондиционера.
 '''
 troom, tcond = list(map(int, input().split(' ')))
-print(troom, tcond)
+mode = input()
+finaltemp = None
+
+if mode == 'freeze':
+    if troom <= tcond:
+        finaltemp = troom
+    else:
+        finaltemp = tcond
+elif mode == 'heat':
+    if troom >= tcond:
+        finaltemp = troom
+    else:
+        finaltemp = tcond
+elif mode == 'auto':
+    finaltemp = tcond
+elif mode == 'fan':
+    finaltemp = troom
+
+print(finaltemp)
