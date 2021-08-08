@@ -27,85 +27,81 @@ f = float(input())
 #(a b | e)    (1 b/a | e/a)    (1 b/a | e/a)
 #(c d | f) -> (1 d/c | f/c) -> (1 d/c | f/c)
 
-def find(a,b,c,d,e,f):
-    # нормализуем 1 ур.
-    if a!=0:
-        a = 1; b = b/a; e = e/a
-    else:
-        if b!=0:
-            b = 1; e = e/b
 
-    # нормализуем 2 ур.
-    if c!=0:
-        c = 1; d = d/c; f = f/c
-    else:
-        if d!=0:
-            d = 1; f = f/d
+# нормализуем 1 ур.
+if a!=0:
+    b = b/a; e = e/a; a = 1
+else:
+    if b!=0:
+        e = e/b; b = 1
 
-    if (a==0 and b==0 and e==0) and (c==0 and d==0 and f==0): # last
-        print(5)
-        return
-    else: 
-        # проверим на нули:
-        if a==0 and b==0: #эта ситуация может повториться после вычитания
-            if e==0:
-                pass #y=kx+b print(1, k, b) надо также посмотреть c и d на нули
-                return
-            else:
-                print(0)
-                return
-        if c==0 and d==0:
-            if f==0:
-                pass #y=kx+b print(1, k, b) надо также посмотреть a и b на нули
-                return
-            else:
-                print(0)
-                return
-        
-        #вычтем одно из другого:
-        if a!=0:
-            if c!=0:
-                return #вычитаем
-            return #(тут остается обратный ход) если b!=0 и d!=0
-        elif c!=0:
+# нормализуем 2 ур.
+if c!=0:
+    d = d/c; f = f/c; c = 1
+else:
+    if d!=0:
+        f = f/d; d = 1
+
+while True:
+#########################
+    if a==0:
+        if c==1: #a==0, c==1
             a, c = c, a
             b, d = d, b
             e, f = f, e
-            #точно не вычитаем, т.к. c сейчас равно 0
-            return #(тут остается обратный ход) если b!=0 и d!=0
-        ### ВЕТКА СНИЗУ ЗАКРЫТА
-        else: #a и c оба занулённые -> y=y0 либо нет решений
-            if b==1:
-                if d==1:                 #b==1, d==1
-                    if e==f:
-                        print(4, e)
-                        return
-                    else:
-                        print(0)
-                        return
-                else:                    #b==1, d==0
-                    if f == 0:
-                        print(4, e)
-                        return
-                    else:
-                        print(0)
-                        return
-            elif d==0:                   #b==0, d==0, e!=0 or f!=0
-                print(0)
-                return
-            else:                        #b==0, d==1
-                if e==0:
-                    print(4, f)       
-                    return
+            #a==1, c==0
+            continue
+        else:                          #a==0, c==0
+            if b==0:
+                if d==1:
+                    b, d = d, b
+                    e, f = f, e
+                    continue
                 else:
+                    if e==0 and f==0:
+                        print(5)
+                        break
+                    else:
+                        print(0)
+                        break
+            else:                      #a==0, c==0, b==1
+                if d==1:
+                    if e==f:
+                        print(4, e) #or print(4,f)
+                        break
+                    else:
+                        print(0)
+                        break
+                else:
+                    if f==0:
+                        print(4,e)
+                        break
+                    else:
+                        print(0)
+                        break
+    else: #a==1
+        if c==0:
+            if d==0:
+                if f!=0:
                     print(0)
-                    return            
+                    break
+                else:
+                    if b!=0:
+                        print(1, -1/b, e/b)
+                        break
+                    else:
+                        print(3, e)
+                        break
+            else: #d==1
+                b = 0
+                e = e - b*f
+                print(2, e, f)
+                break
+        else: #a==1,c==1
 
-
-    return
-
-
-find(a,b,c,d,e,f)
-
-# ПРОВЕРИМ НА ВСЕ НУЛИ
-# Проверим каждую строчку на левую часть == 0
+            c = 0
+            d = d - b
+            f = f - e
+            if d!=0:
+                f = f / d; d=1
+            continue
