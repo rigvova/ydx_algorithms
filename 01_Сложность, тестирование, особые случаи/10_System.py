@@ -17,6 +17,9 @@ cx + dy = f
 
 Числа x0 и y0 будут проверяться с точностью до пяти знаков после точки. 
 '''
+def isclose(a, b, abs_tol=1e-06):
+    return abs(a-b) <= abs_tol
+
 a = float(input())
 b = float(input())
 c = float(input())
@@ -26,7 +29,6 @@ f = float(input())
 
 #(a b | e)    (1 b/a | e/a)    (1 b/a | e/a)
 #(c d | f) -> (1 d/c | f/c) -> (1 d/c | f/c)
-
 
 # нормализуем 1 ур.
 if a!=0:
@@ -43,9 +45,8 @@ else:
         f = f/d; d = 1
 
 while True:
-#########################
     if a==0:
-        if c==1: #a==0, c==1
+        if isclose(c,1): #a==0, c==1
             a, c = c, a
             b, d = d, b
             e, f = f, e
@@ -53,7 +54,7 @@ while True:
             continue
         else:                          #a==0, c==0
             if b==0:
-                if d==1:
+                if isclose(d,1):
                     b, d = d, b
                     e, f = f, e
                     continue
@@ -66,7 +67,7 @@ while True:
                         break
             else:                      #a==0, c==0, b==1
                 if d==1:
-                    if e==f:
+                    if isclose(e,f):
                         print(4, e) #or print(4,f)
                         break
                     else:
@@ -93,12 +94,11 @@ while True:
                         print(3, e)
                         break
             else: #d==1
-                b = 0
                 e = e - b*f
+                b = 0
                 print(2, e, f)
                 break
         else: #a==1,c==1
-
             c = 0
             d = d - b
             f = f - e
