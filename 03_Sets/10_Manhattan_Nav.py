@@ -29,7 +29,7 @@
 """
 
 # NON-OPTIMAL SOLUTION
-# Less resourse and time demanding algorithm would use 4 linear equations to depict area of premitted values.
+# Less resource and time demanding algorithm would use 4 linear equations to depict area of permitted values.
 t, d, n = map(int, input().split())
 
 coords = []
